@@ -110,3 +110,16 @@
   -webkit-text-fill-color: transparent;
   animation: shimmerWave 6s infinite linear;
 }
+
+/* Realistic Dove Wing Flap Animation */
+@keyframes doveWing {
+  0% {
+    transform: rotate(0deg) scaleY(1);
+  }
+  50% {
+    transform: rotate(-16deg) scaleY(0.42);
+  }
+  100% {
+    transform: rotate(14deg) scaleY(1.18);
+  }
+}

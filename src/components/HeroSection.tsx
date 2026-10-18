@@ -4,6 +4,8 @@ import { Calendar, Heart, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { weddingData } from '../config/weddingData';
 import { downloadIcsFile } from '../utils/calendar';
 
+import { FlyingDoves } from './FlyingDoves';
+
 interface TimeLeft {
   days: number;
   hours: number;
@@ -48,15 +50,18 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#070709] px-4 py-16 sm:py-20">
-      {/* Background with Ken Burns Breathing Effect */}
+      {/* Cinematic White Doves Flight Background Layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-kenburns opacity-40 md:opacity-50 transition-opacity duration-1000"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-kenburns opacity-35 md:opacity-45 transition-opacity duration-1000"
           style={{
-            backgroundImage: `url('/images/hero.jpg')`,
-            filter: 'contrast(1.08) brightness(0.85) saturate(1.1)',
+            backgroundImage: `url('https://images.unsplash.com/photo-1507126882445-434b04530d1a?auto=format&fit=crop&w=2000&q=85')`,
+            filter: 'contrast(1.15) brightness(0.85) saturate(1.1)',
           }}
         />
+
+        {/* Animated Flying White Doves Video Effect */}
+        <FlyingDoves />
 
         {/* Multi-layered dark-luxe vignette overlays */}
         {/* Obsidian dark fade at top & bottom */}

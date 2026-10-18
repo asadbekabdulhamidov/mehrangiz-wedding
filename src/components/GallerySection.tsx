@@ -16,15 +16,15 @@ export const GallerySection: React.FC = () => {
   const photos: PhotoItem[] = [
     {
       id: 1,
-      src: '/images/registry.jpg',
+      src: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80',
       title: 'Muhabbat Guldastasi',
       subtitle: `${weddingData.couple.groom} & ${weddingData.couple.bride}`,
     },
     {
       id: 2,
-      src: '/images/hero.jpg',
+      src: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1200&q=80',
       title: 'Qutlug\' Qadam',
-      subtitle: 'Rasmiy Nikoh Qayd Etilgan Kun',
+      subtitle: 'Visol Oqshomi',
     },
     {
       id: 3,
