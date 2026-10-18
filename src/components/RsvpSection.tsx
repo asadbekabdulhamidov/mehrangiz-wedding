@@ -13,40 +13,31 @@ interface Wish {
   date: string;
 }
 
-const DEFAULT_WISHES: Wish[] = [
-  {
-    id: '1',
-    name: 'Akmal & Nilufar',
-    attending: true,
-    guestsCount: 2,
-    message: 'Ilohim baxtingiz osmon qadar baland, umringiz sermazmun va farovon bo\'lsin! Ikki dunyo saodatini tilaymiz!',
-    date: 'Bugun',
-  },
-  {
-    id: '2',
-    name: 'Bobur Mirzayev',
-    attending: true,
-    guestsCount: 1,
-    message: 'Jamshidbek do\'stim va Mehrangisxon, yangi qurilayotgan oilangiz mustahkam va totuv bo\'lsin. To\'yda ko\'rishguncha!',
-    date: 'Kecha',
-  },
-];
-
 export const RsvpSection: React.FC = () => {
   const [name, setName] = useState('');
   const [attending, setAttending] = useState<boolean>(true);
   const [guestsCount, setGuestsCount] = useState<number>(1);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [wishes, setWishes] = useState<Wish[]>(DEFAULT_WISHES);
+  const [wishes, setWishes] = useState<Wish[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('wedding_rsvp_wishes');
+    // Clear legacy mock wishes if any exist
+    localStorage.removeItem('wedding_rsvp_wishes');
+
+    const saved = localStorage.getItem('wedding_rsvp_wishes_guest');
     if (saved) {
       try {
-        setWishes(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          // Keep only genuine user submitted wishes
+          const realWishes = parsed.filter(
+            (w: Wish) => w.id !== '1' && w.id !== '2' && !w.name.includes('Akmal') && !w.name.includes('Bobur')
+          );
+          setWishes(realWishes);
+        }
       } catch (e) {
-        setWishes(DEFAULT_WISHES);
+        setWishes([]);
       }
     }
   }, []);
@@ -75,7 +66,7 @@ export const RsvpSection: React.FC = () => {
 
     const updated = [newWish, ...wishes];
     setWishes(updated);
-    localStorage.setItem('wedding_rsvp_wishes', JSON.stringify(updated));
+    localStorage.setItem('wedding_rsvp_wishes_guest', JSON.stringify(updated));
 
     triggerGoldConfetti();
     setSubmitted(true);
@@ -283,47 +274,49 @@ export const RsvpSection: React.FC = () => {
           )}
         </motion.div>
 
-        {/* Guestbook / Tilaklar kitobi */}
-        <div className="mt-16 sm:mt-20">
-          <div className="flex items-center justify-between mb-8 pb-3 border-b border-[#D4AF37]/20">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-[#D4AF37]" />
-              <h3 className="text-xl sm:text-2xl font-cinzel font-semibold text-gold-gradient">
-                Mehmonlar Tilaklari
-              </h3>
-            </div>
-            <span className="text-xs font-sans text-[#C4BCAB]/70">
-              {wishes.length} ta tilak
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {wishes.map((wish) => (
-              <div
-                key={wish.id}
-                className="p-5 rounded-2xl bg-[#0D0D14]/75 border border-[#D4AF37]/15 hover:border-[#D4AF37]/35 transition-colors flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-cinzel text-sm sm:text-base font-semibold text-[#F6EED8]">
-                      {wish.name}
-                    </span>
-                    <span className="text-[10px] font-sans text-[#D4AF37]/80 uppercase px-2 py-0.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20">
-                      {wish.attending ? `Tashrif buyuradi` : `Samimiy tilak`}
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm font-cormorant italic text-[#C4BCAB] leading-relaxed">
-                    &ldquo;{wish.message}&rdquo;
-                  </p>
-                </div>
-                <div className="mt-4 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-neutral-500">
-                  <span>{wish.date}</span>
-                  <Heart size={12} className="text-[#D4AF37]/50 fill-[#D4AF37]/30" />
-                </div>
+        {/* Guestbook / Tilaklar kitobi - Only shown when guest wishes exist */}
+        {wishes.length > 0 && (
+          <div className="mt-16 sm:mt-20">
+            <div className="flex items-center justify-between mb-8 pb-3 border-b border-[#D4AF37]/20">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="w-5 h-5 text-[#D4AF37]" />
+                <h3 className="text-xl sm:text-2xl font-cinzel font-semibold text-gold-gradient">
+                  Mehmonlar Tilaklari
+                </h3>
               </div>
-            ))}
+              <span className="text-xs font-sans text-[#C4BCAB]/70">
+                {wishes.length} ta tilak
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {wishes.map((wish) => (
+                <div
+                  key={wish.id}
+                  className="p-5 rounded-2xl bg-[#0D0D14]/75 border border-[#D4AF37]/15 hover:border-[#D4AF37]/35 transition-colors flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-cinzel text-sm sm:text-base font-semibold text-[#F6EED8]">
+                        {wish.name}
+                      </span>
+                      <span className="text-[10px] font-sans text-[#D4AF37]/80 uppercase px-2 py-0.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20">
+                        {wish.attending ? `Tashrif buyuradi` : `Samimiy tilak`}
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-cormorant italic text-[#C4BCAB] leading-relaxed">
+                      &ldquo;{wish.message}&rdquo;
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-neutral-500">
+                    <span>{wish.date}</span>
+                    <Heart size={12} className="text-[#D4AF37]/50 fill-[#D4AF37]/30" />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
