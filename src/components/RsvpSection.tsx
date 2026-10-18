@@ -27,7 +27,7 @@ const DEFAULT_WISHES: Wish[] = [
     name: 'Bobur Mirzayev',
     attending: true,
     guestsCount: 1,
-    message: 'Jamshidbek do\'stim va Mehrangizxon, yangi qurilayotgan oilangiz mustahkam va totuv bo\'lsin. To\'yda ko\'rishguncha!',
+    message: 'Jamshidbek do\'stim va Mehrangisxon, yangi qurilayotgan oilangiz mustahkam va totuv bo\'lsin. To\'yda ko\'rishguncha!',
     date: 'Kecha',
   },
 ];

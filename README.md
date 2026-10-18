@@ -1,11 +1,11 @@
-# Asadbek & Mehrangiz — To'y Taklifnomasi (Dark-Luxe Wedding Invitation)
+# Jamshidbek & Mehrangis — To'y Taklifnomasi (Dark-Luxe Wedding Invitation)
 
 Dark-luxe uslubidagi (issiq sham shu'lasi, oltin jilosi, suzuvchi uchqunlar va glassmorfizm) dabdabali to'y taklifnomasi veb-sayti.
 
 ## 🌟 Asosiy Xususiyatlar:
 1. **Kinematik Hero Section**:
    - Fon suratida mayin Ken Burns nafas olish animatsiyasi.
-   - Oltin jilosidagi kalligrafik nomlar: **Asadbek & Mehrangiz**.
+   - Oltin jilosidagi kalligrafik nomlar: **Jamshidbek & Mehrangis**.
    - Jonli va aniq Countdown (kun, soat, daqiqa, soniya) taymeri.
    - "Taklifni tasdiqlash" va "Taqvimga saqlash" tezkor tugmalari.
 

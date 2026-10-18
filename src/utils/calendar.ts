@@ -31,11 +31,11 @@ export function downloadIcsFile(): void {
   const icsContent = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Jamshidbek & Mehrangiz Wedding//UZ',
+    'PRODID:-//Jamshidbek & Mehrangis Wedding//UZ',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `UID:wedding-${Date.now()}@jamshidbek-mehrangiz.wedding`,
+    `UID:wedding-${Date.now()}@jamshidbek-mehrangis.wedding`,
     `DTSTAMP:${formatIcsDate(new Date())}`,
     `DTSTART:${formatIcsDate(startDate)}`,
     `DTEND:${formatIcsDate(endDate)}`,
@@ -51,7 +51,7 @@ export function downloadIcsFile(): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', 'Jamshidbek-va-Mehrangiz-Toy-Taklifnomasi.ics');
+  link.setAttribute('download', 'Jamshidbek-va-Mehrangis-Toy-Taklifnomasi.ics');
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

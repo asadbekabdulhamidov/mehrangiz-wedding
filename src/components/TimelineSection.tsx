@@ -83,7 +83,7 @@ export const TimelineSection: React.FC = () => {
           </h3>
 
           <p className="text-sm sm:text-base font-cormorant leading-relaxed text-[#EDE7DE] max-w-xl mx-auto mb-8 font-normal">
-            Hurmatli va aziz mehmonimiz! Jamshidbek va Mehrangizning qutlug' visol to'yi munosabati bilan yoziladigan fayzli dasturxonimizga soat <strong className="text-[#F6EED8] font-bold font-sans">10:00</strong> da tashrif buyurib, quvonchimizga sherik bo'lishingizni chin yurakdan so'raymiz.
+            Hurmatli va aziz mehmonimiz! {weddingData.couple.groom} va {weddingData.couple.bride}ning qutlug' visol to'yi munosabati bilan yoziladigan fayzli dasturxonimizga soat <strong className="text-[#F6EED8] font-bold font-sans">10:00</strong> da tashrif buyurib, quvonchimizga sherik bo'lishingizni chin yurakdan so'raymiz.
           </p>
 
           {/* Highlight badges grid */}

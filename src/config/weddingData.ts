@@ -51,20 +51,20 @@ export interface WeddingConfig {
 export const weddingData: WeddingConfig = {
   couple: {
     groom: "Jamshidbek",
-    bride: "Mehrangiz",
+    bride: "Mehrangis",
     groomFull: "Jamshidbek",
-    brideFull: "Mehrangiz",
+    brideFull: "Mehrangis",
     quote: "Muhabbat — ikki qalbning bir butunga aylanishi va umrbod birga urishidir.",
     subtitle: "BAXT TO'YI MAROSIMI",
-    parentsInvitation: "Aziz va qadrli mehmonimiz! Sizni aziz farzandlarimiz Jamshidbek va Mehrangizning qutlug' visol oqshomi — baxt to'yiga lutfan taklif etamiz. Ushbu unutilmas quvonchli kunimizda davramiz fayzi bo'lishingiz biz uchun cheksiz sharafdir.",
+    parentsInvitation: "Aziz va qadrli mehmonimiz! Sizni aziz farzandlarimiz Jamshidbek va Mehrangisning qutlug' visol oqshomi — baxt to'yiga lutfan taklif etamiz. Ushbu unutilmas quvonchli kunimizda davramiz fayzi bo'lishingiz biz uchun cheksiz sharafdir.",
   },
   event: {
     date: "2026-11-01T10:00:00",
     displayDate: "1-Noyabr, 2026-yil",
     displayDay: "Yakshanba",
     displayTime: "10:00",
-    calendarSummary: "Jamshidbek & Mehrangiz To'y Marosimi",
-    calendarDescription: "Jamshidbek va Mehrangizning baxt to'yi marosimi. Sizni soat 10:00 da ko'rishdan bag'oyat mamnunmiz!",
+    calendarSummary: "Jamshidbek & Mehrangis To'y Marosimi",
+    calendarDescription: "Jamshidbek va Mehrangisning baxt to'yi marosimi. Sizni soat 10:00 da ko'rishdan bag'oyat mamnunmiz!",
   },
   venue: {
     name: '"Zamin" Tantanalar Saroyi',
