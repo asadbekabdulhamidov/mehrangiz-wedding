@@ -19,27 +19,50 @@ export const RsvpSection: React.FC = () => {
   const [guestsCount, setGuestsCount] = useState<number>(1);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [wishes, setWishes] = useState<Wish[]>([]);
 
-  useEffect(() => {
-    // Clear legacy mock wishes if any exist
-    localStorage.removeItem('wedding_rsvp_wishes');
+  // Fetch wishes from Cloud API
+  const fetchCloudWishes = async () => {
+    if (!weddingData.wishesApiUrl) return;
 
+    try {
+      const res = await fetch(`${weddingData.wishesApiUrl}?t=${Date.now()}`, {
+        headers: { 'Cache-Control': 'no-cache' },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && Array.isArray(data.wishes)) {
+          setWishes(data.wishes);
+          localStorage.setItem('wedding_rsvp_wishes_guest', JSON.stringify(data.wishes));
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn('Cloud sync offline, using local storage cache.');
+    }
+
+    // Fallback to local storage if network is unreachable
     const saved = localStorage.getItem('wedding_rsvp_wishes_guest');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          // Keep only genuine user submitted wishes
-          const realWishes = parsed.filter(
-            (w: Wish) => w.id !== '1' && w.id !== '2' && !w.name.includes('Akmal') && !w.name.includes('Bobur')
-          );
-          setWishes(realWishes);
+          setWishes(parsed);
         }
-      } catch (e) {
+      } catch {
         setWishes([]);
       }
     }
+  };
+
+  useEffect(() => {
+    localStorage.removeItem('wedding_rsvp_wishes');
+    fetchCloudWishes();
+
+    // Poll every 25 seconds for new guest wishes
+    const interval = setInterval(fetchCloudWishes, 25000);
+    return () => clearInterval(interval);
   }, []);
 
   const triggerGoldConfetti = () => {
@@ -51,9 +74,14 @@ export const RsvpSection: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    const now = new Date();
+    const formattedDate = `${String(now.getDate()).padStart(2, '0')}.${String(now.getMonth() + 1).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
     const newWish: Wish = {
       id: Date.now().toString(),
@@ -61,15 +89,30 @@ export const RsvpSection: React.FC = () => {
       attending,
       guestsCount: attending ? guestsCount : 0,
       message: message.trim() || 'Tabriklaymiz!',
-      date: 'Hozirgina',
+      date: formattedDate,
     };
 
+    // Optimistic UI update
     const updated = [newWish, ...wishes];
     setWishes(updated);
     localStorage.setItem('wedding_rsvp_wishes_guest', JSON.stringify(updated));
 
     triggerGoldConfetti();
     setSubmitted(true);
+    setIsSubmitting(false);
+
+    // Save to Cloud Storage
+    if (weddingData.wishesApiUrl) {
+      try {
+        await fetch(weddingData.wishesApiUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wishes: updated }),
+        });
+      } catch (cloudErr) {
+        console.warn('Could not sync wish to cloud:', cloudErr);
+      }
+    }
   };
 
   const handleTelegramShare = () => {
@@ -262,13 +305,14 @@ export const RsvpSection: React.FC = () => {
               {/* Submit Button */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="w-full py-4 rounded-xl font-cinzel text-xs sm:text-sm font-bold tracking-[0.2em] uppercase
                   bg-gradient-to-r from-[#D4AF37] via-[#F7E7B4] to-[#B38E22] text-[#0A0A0E]
                   hover:shadow-[0_0_35px_rgba(212,175,55,0.45)] hover:scale-[1.01] active:scale-[0.99]
-                  transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                  transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg disabled:opacity-60"
               >
-                <Send size={16} />
-                <span>Taklifni tasdiqlash va Yuborish</span>
+                <Send size={16} className={isSubmitting ? 'animate-pulse' : ''} />
+                <span>{isSubmitting ? 'Yuborilmoqda...' : 'Taklifni tasdiqlash va Yuborish'}</span>
               </button>
             </form>
           )}

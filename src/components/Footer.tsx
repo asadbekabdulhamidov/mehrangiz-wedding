@@ -39,7 +39,21 @@ export const Footer: React.FC = () => {
           <ArrowUp size={14} className="group-hover:-translate-y-0.5 transition-transform text-[#D4AF37]" />
         </button>
 
-        <div className="mt-12 flex items-center justify-center gap-1.5 text-[11px] text-neutral-600 font-sans">
+        {/* Subtle Developer Promo / Order Link */}
+        <div className="mt-8 pt-5 border-t border-white/5 flex flex-col items-center">
+          <a
+            href="https://t.me/Asadbek_developer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0D0D14]/80 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:bg-[#14141E] transition-all duration-300 text-[11px] font-sans text-[#C4BCAB]/80 hover:text-[#FFF4D0]"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+            <span className="font-light">Bunday taklifnoma yasash uchun:</span>
+            <span className="text-[#E5C158] font-medium group-hover:underline">@Asadbek_developer</span>
+          </a>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center gap-1.5 text-[11px] text-neutral-600 font-sans">
           <span>Sevgi va ezgu niyatlar bilan tayyorlandi</span>
           <Heart size={10} className="text-[#D4AF37]/50 fill-[#D4AF37]/30" />
         </div>

@@ -46,6 +46,7 @@ export interface WeddingConfig {
     phoneBride: string;
     telegramUsername?: string;
   };
+  wishesApiUrl?: string;
 }
 
 export const weddingData: WeddingConfig = {
@@ -98,4 +99,5 @@ export const weddingData: WeddingConfig = {
     phoneBride: "+998 90 765 43 21",
     telegramUsername: "jamshidbek_wedding",
   },
+  wishesApiUrl: "https://extendsclass.com/api/json-storage/bin/afefddf",
 };
